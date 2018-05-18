@@ -12,28 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 import member.model.vo.MemberVO;
 
-/**
- * Servlet implementation class Login
- */
 @WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public Login() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		String userId = request.getParameter("userid");
 		String userPwd = request.getParameter("userpwd");
@@ -48,14 +36,16 @@ public class Login extends HttpServlet {
 			out.println("</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<center>");
 			out.println("<h1>");
 			out.println("회원정보");
 			out.println("</h1>");
 			out.print("<hr>");
 			out.println("<h3>");
-			out.println("없는 회원 입니다");
+			out.println("회원 정보를 잘못 입력했습니다");
 			out.println("</h3>");
 			out.print("<hr>");
+			out.println("</center>");
 			out.println("</body>");
 			out.println("</html>");
 		} else {
@@ -66,6 +56,7 @@ public class Login extends HttpServlet {
 			out.println("</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<center>");
 			out.println("<h1>");
 			out.println("회원정보");
 			out.println("</h1>");
@@ -82,19 +73,14 @@ public class Login extends HttpServlet {
 			out.println("주소 : " + m.getMemberAddr());
 			out.println("</h3>");
 			out.print("<hr>");
+			out.println("</center>");
 			out.println("</body>");
 			out.println("</html>");
-
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
