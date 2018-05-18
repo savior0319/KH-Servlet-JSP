@@ -8,19 +8,59 @@
     <title>Document</title>
 </head>
 
+<style>
+    legend {
+        font-size: 20px;
+    }
+
+    pre {
+        font-size: 16px;
+    }
+</style>
+
 <body>
     <form action="/web1/login" method="post">
         <fieldset>
             <legend>로그인</legend>
             <pre>
-ID : <input type="text" name="userid">
+ID : <input type="text" name="userid" id="userid" placeholder="아이디 입력">
 
-PW : <input type="password" name="userpwd">
+PW : <input type="password" name="userpwd" id="userpwd" placeholder="비밀번호 입력">
               </pre>
-            <input type="submit" value="로그인">
+            <input type="submit" value="로그인" onclick="return sendFunc();">
             <input type="reset" value="취소">
         </fieldset>
     </form>
 </body>
+
+<script>
+    function sendFunc() {
+        var btn = document.getElementById("submit");
+        var id = document.getElementById("userid");
+        var pw = document.getElementById("userpwd");
+
+        var regExpId = /^[a-zA-Z0-9]+$/;
+        var regExpPw = /^.+$/;
+
+        var resultId = regExpId.test(id.value);
+        var resultPwd = regExpPw.test(pw.value);
+
+        if (resultId == false) {
+            pw.style.background = "white"
+            id.style.background = "skyblue";
+            alert('아이디를 입력하세요(영문자 + 숫자만 입력 가능)');
+            return false;
+        } else if (resultPwd == false) {
+            id.style.background = "white";
+            pw.style.background = "skyblue";
+            alert('비밀번호를 입력하세요');
+            return false;
+        } else {
+            id.style.background = "white";
+            pw.style.background = "white";
+            return true;
+        }
+    }
+</script>
 
 </html>

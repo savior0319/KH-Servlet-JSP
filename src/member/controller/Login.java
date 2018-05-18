@@ -35,6 +35,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.MemberVO;
@@ -50,11 +51,11 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		String userId = request.getParameter("userid");
 		String userPwd = request.getParameter("userpwd");
 		MemberVO m = new MemberService().selectMember(userId, userPwd);
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 
 		if (m == null) { // 로그인 실패
 			out.println("<html>");
@@ -78,8 +79,15 @@ public class Login extends HttpServlet {
 			out.print("<hr>");
 			out.println("</center>");
 			out.println("</body>");
+			// out.println("<script>");
+			// out.println("window.onload = function(){alert('로그인 실패');}");
+			// out.println("</script>");
 			out.println("</html>");
 		} else { // 로그인 성공
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user", m);
+
 			out.println("<html>");
 			out.println("<head>");
 			out.println("<title>");
@@ -87,7 +95,8 @@ public class Login extends HttpServlet {
 			out.println("</title>");
 			out.println("</head>");
 			out.println("<style>");
-			out.println("h1{color : blue;} a{text-decoration:none;}");
+			out.println(
+					"h1{color : blue;} a{text-decoration:none; width:150px; display:inline-block;} a:hover{background:skyblue;}");
 			out.println("</style>");
 			out.println("<body>");
 			out.println("<center>");
@@ -95,27 +104,14 @@ public class Login extends HttpServlet {
 			out.println(m.getMemberName() + "님 환영합니다");
 			out.println("</h1>");
 			out.println("<hr>");
-			out.println("<h2>");
-			out.println("회원정보");
-			out.println("</h2>");
-			out.println("<hr>");
-			out.println("<h3>");
-			out.println("아이디 : " + m.getMemberID());
-			out.println("<br>");
-			out.println("비밀번호 : " + m.getMemberPwd());
-			out.println("<br>");
-			out.println("이름 : " + m.getMemberName());
-			out.println("<br>");
-			out.println("나이 : " + m.getMemberAge());
-			out.println("<br>");
-			out.println("주소 : " + m.getMemberAddr());
-			out.println("</h3>");
-			out.print("<hr>");
 			out.println("<a href=myInfo>마이페이지</a>");
 			out.println("<br>");
 			out.println("<a href=logout>로그아웃</a>");
 			out.println("</center>");
 			out.println("</body>");
+			// out.println("<script>");
+			// out.println("window.onload = function(){alert('로그인 성공');}");
+			// out.println("</script>");
 			out.println("</html>");
 		}
 	}

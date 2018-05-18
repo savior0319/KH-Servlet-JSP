@@ -21,6 +21,12 @@ public class MemberService {
 			m = new MemberDao().selectMember(conn, userId, userPwd);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return m;
 	}

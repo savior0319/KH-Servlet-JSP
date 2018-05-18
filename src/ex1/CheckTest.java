@@ -1,4 +1,4 @@
-package test;
+package ex1;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "plus", urlPatterns = { "/plus" })
-public class PlusServlet extends HttpServlet {
+@WebServlet("/checktest")
+public class CheckTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public PlusServlet() {
+	public CheckTest() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String val1 = request.getParameter("first");
-		String val2 = request.getParameter("second");
+
+		String checked[] = request.getParameterValues("area");
 
 		response.setContentType("text/html; charset=UTF-8");
-		int result = Integer.parseInt(request.getParameter("first")) + Integer.parseInt(request.getParameter("second"));
 		PrintWriter out = response.getWriter();
 
 		out.println("<html>");
@@ -35,11 +34,15 @@ public class PlusServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<h1>");
-		out.println(val1 + " + " + val2 + " = " + result);
+		out.println("선택");
 		out.println("</h1>");
+		out.println("<h3>");
+		for (int i = 0; i < checked.length; i++) {
+			out.println(checked[i] + " ");
+		}
+		out.println("</h3>");
 		out.println("</body>");
 		out.println("</html>");
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
