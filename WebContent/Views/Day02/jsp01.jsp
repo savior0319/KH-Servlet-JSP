@@ -10,12 +10,14 @@
 <title>Document</title>
 </head>
 <body>
+
 	<h1>하이JSP</h1>
 	<%
 		int a = 100;
 	%>
-	<%=a%>
+	
 	<!-- 주석 -->
+	<%-- 주석 --%>
 </body>
 
 </html>
