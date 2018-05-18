@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>계산기 입니다</h1>
+    <form action="/web1/Views/Day02/jspCal.jsp" method="get">
+        <input type="text" name="val1" id="val1">
+        <select name="op">
+            <option value="div">/</option>
+            <option value="mul">*</option>
+            <option value="plus">+</option>
+            <option value="minus">-</option>
+        </select>
+        <input type="text" name="val2" id="val2">
+        <br>
+        <input type="submit" value="전송">
+        <input type="reset" value="취소">
+    </form>
+</body>
+
+</html>
