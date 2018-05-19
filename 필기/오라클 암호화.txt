@@ -56,6 +56,22 @@ SQL> CREATE OR REPLACE PACKAGE BODY CryptInfo AS
   END CryptInfo;
   /
 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+-- 데이터 입력 시 예시
+ex쿼리) 
+INSERT INTO MEMBER VALUES('test', CryptInfo.encrypt('test', 'key'), '테스트', 20, '서울');
+
+-- 데이터 조회 예시
+ex쿼리)
+SELECT * FROM MEMBER WHERE member_id = 'test' AND CryptIT.decrypt(MEMBER_PWD,'key') = 'test';
+
+-- PreparedStatement 방식 DAO에서 조회
+ex쿼리) 
+String query = "SELECT * FROM MEMBER WHERE member_id = ? AND CryptIT.decrypt(MEMBER_PWD,'key') =  ?";
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
 
 실행 예제
  
@@ -107,9 +123,6 @@ SQL> SELECT id, CryptInfo.decrypt(passwd,'oramaster') passwd
         ID PASSWD
 ---------- -----------
          2 5678 
-
--- PreparedStatement 방식 DAO에서 조회
-ex쿼리) String query = "SELECT * FROM MEMBER WHERE member_id = ? AND CryptIT.decrypt(MEMBER_PWD,'key') =  ?";
     
 관련 ORA error number
   ORA error 28231 "Invalid input to Obfuscation toolkit" - input data, key값이 NULL일 경우 발생
