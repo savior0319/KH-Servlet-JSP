@@ -64,11 +64,11 @@ INSERT INTO MEMBER VALUES('test', CryptInfo.encrypt('test', 'key'), '테스트',
 
 -- 데이터 조회 예시
 ex쿼리)
-SELECT * FROM MEMBER WHERE member_id = 'test' AND CryptIT.decrypt(MEMBER_PWD,'key') = 'test';
+SELECT * FROM MEMBER WHERE member_id = 'test' AND CryptInfo.decrypt(MEMBER_PWD,'key') = 'test';
 
 -- PreparedStatement 방식 DAO에서 조회
 ex쿼리) 
-String query = "SELECT * FROM MEMBER WHERE member_id = ? AND CryptIT.decrypt(MEMBER_PWD,'key') =  ?";
+String query = "SELECT * FROM MEMBER WHERE member_id = ? AND CryptInfo.decrypt(MEMBER_PWD,'key') =  ?";
 
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
