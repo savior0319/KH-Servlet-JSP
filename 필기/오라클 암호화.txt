@@ -1,0 +1,119 @@
+오라클 11g
+
+-- system 계정으로 로그인
+
+-- 스크립트 실행 
+SQL> @dbmsobtk.sql (경로 = X:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\dbmsobtk.sql)
+SQL> @prvtobtk.plb (경로 = X:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\prvtobtk.plb)
+   
+-- 권한 부여
+SQL> GRANT execute ON dbms_obfuscation_toolkit TO public;
+    
+-- 암호화 할 테이블이 있는 계정으로 로그인
+
+패키지 생성 하기 (암호화 할 테이블이 있는 계정에서 생성)
+
+-- 패키지 선언부 생성
+SQL> CREATE OR REPLACE PACKAGE CryptInfo AS 
+         FUNCTION encrypt( Str VARCHAR2,  
+                     hash VARCHAR2 ) RETURN VARCHAR2;
+
+         FUNCTION decrypt( xCrypt VARCHAR2,
+                     hash VARCHAR2 ) RETURN VARCHAR2;
+     END CryptIT;
+     /
+ 
+-- 패키지 본체 생성
+SQL> CREATE OR REPLACE PACKAGE BODY CryptInfo AS 
+        crypted_string VARCHAR2(2000);
+ 
+        FUNCTION encrypt( Str VARCHAR2,  
+                     hash VARCHAR2 ) RETURN VARCHAR2 AS
+        pieces_of_eight INTEGER := ((FLOOR(LENGTH(Str)/8 + .9)) * 8);
+ 
+      BEGIN
+ 
+        DBMS_OBFUSCATION_TOOLKIT.DESENCRYPT(
+            input_string     => RPAD( Str, pieces_of_eight ),
+            key_string       => RPAD(hash,8,'#'), 
+            encrypted_string => crypted_string 
+        );
+            
+        RETURN crypted_string;
+      END;
+ 
+      FUNCTION decrypt( xCrypt VARCHAR2,
+                     hash VARCHAR2 ) RETURN VARCHAR2 AS 
+      BEGIN
+        DBMS_OBFUSCATION_TOOLKIT.DESDECRYPT(
+           input_string     => xCrypt, 
+           key_string       => RPAD(hash,8,'#'), 
+           decrypted_string => crypted_string 
+        );
+           
+        RETURN trim(crypted_string);
+     END;
+  END CryptInfo;
+  /
+
+
+실행 예제
+ 
+-- Encrypt하여 데이터 입력 예제
+
+-- 테스트 테이블을 생성
+SQL> CREATE TABLE encrypt_table( id number, passwd VARCHAR(20) );
+ 
+-- 테스트 데이터 입력. 
+-- CryptInfo.encrypt(비밀번호, 키값)
+SQL> INSERT INTO encrypt_table 
+     VALUES( 1, CryptInfo.encrypt('1234', 'storm'));
+ 
+SQL> INSERT INTO encrypt_table 
+     VALUES( 2, CryptInfo.encrypt('5678', 'oramaster'));
+     
+SQL> COMMIT;
+
+ 
+-- Decrypt하여 데이터 조회 예제
+-- Decrypt하지 않으면 암호화된 데이터와 비교되서 결과값이 출력되지 않다.
+SQL> SELECT id, passwd FROM encrypt_table WHERE passwd = '1234';
+선택된 레코드가 없습니다.
+ 
+ 
+-- 저장장치에 Encrypt된 값으로 저장 된다.
+SQL> COL passwd FORMAT a60
+SQL> SELECT id, DUMP(passwd) passwd FROM encrypt_table;
+
+         ID PASSWD
+---------- --------------------------------------------
+         1 Typ=1 Len=8: 246,27,80,184,227,225,245,31
+         2 Typ=1 Len=8: 175,231,213,125,85,223,46,133
+ 
+
+-- Encrypt할 때 사용한 Key로만 Decrypt할 수 있다.
+SQL> SELECT id, CryptInfo.decrypt(passwd,'storm') passwd
+     FROM encrypt_table 
+     WHERE CryptInfo.decrypt(passwd,'storm') = '1234';
+ 
+        ID PASSWD
+---------- -----------
+         1 1234
+ 
+SQL> SELECT id, CryptInfo.decrypt(passwd,'oramaster') passwd
+     FROM encrypt_table 
+     WHERE CryptInfo.decrypt(passwd,'oramaster') = '5678';
+ 
+        ID PASSWD
+---------- -----------
+         2 5678 
+
+-- PreparedStatement 방식 DAO에서 조회
+ex쿼리) String query = "SELECT * FROM MEMBER WHERE member_id = ? AND CryptIT.decrypt(MEMBER_PWD,'key') =  ?";
+    
+관련 ORA error number
+  ORA error 28231 "Invalid input to Obfuscation toolkit" - input data, key값이 NULL일 경우 발생
+
+  ORA error 28232 "Invalid input size for Obfuscation toolkit" - input data가 8 bytes 배수가 아닐 경우 발생
+
+  ORA error 28233 "Double encryption not supported by DESEncrypt in Obfuscation toolkit" - encrypt data를 다시 encrypt경우 발생
