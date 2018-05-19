@@ -76,7 +76,7 @@ SQL> COMMIT;
 
  
 -- Decrypt하여 데이터 조회 예제
--- Decrypt하지 않으면 암호화된 데이터와 비교되서 결과값이 출력되지 않다.
+-- Decrypt하지 않으면 암호화된 데이터와 비교되서 결과값이 출력되지 않음.
 SQL> SELECT id, passwd FROM encrypt_table WHERE passwd = '1234';
 선택된 레코드가 없습니다.
  
@@ -91,7 +91,7 @@ SQL> SELECT id, DUMP(passwd) passwd FROM encrypt_table;
          2 Typ=1 Len=8: 175,231,213,125,85,223,46,133
  
 
--- Encrypt할 때 사용한 Key로만 Decrypt할 수 있다.
+-- Encrypt할 때 사용한 Key로만 Decrypt할 수 있음.
 SQL> SELECT id, CryptInfo.decrypt(passwd,'storm') passwd
      FROM encrypt_table 
      WHERE CryptInfo.decrypt(passwd,'storm') = '1234';
