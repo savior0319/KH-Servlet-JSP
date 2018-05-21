@@ -44,21 +44,23 @@ a:hover {
 
 	<%
 		MemberVO mv = new MemberVO();
-		request.setCharacterEncoding("utf-8");
-		mv.setMemberID(request.getParameter("userId"));
-		mv.setMemberPwd(request.getParameter("userPwd"));
-		mv.setMemberAddr(request.getParameter("userAddr"));
-		int result = new MemberService().memberUpdate(mv);
+			request.setCharacterEncoding("utf-8");
+			mv.setMemberID(request.getParameter("userId"));
+			mv.setMemberPwd(request.getParameter("userPwd"));
+			mv.setMemberAddr(request.getParameter("userAddr"));
+			int result = new MemberService().memberUpdate(mv);
 
-		if (result > 0) {
-			session.getAttribute("user");
+			if (result > 0) {
+			/* 정보 변경 후 다시 데이터를 가져옴 */
+			mv = new MemberService().selectMember(request.getParameter("userId"), request.getParameter("userPwd"));
+			session.setAttribute("user", mv);
 	%>
 	<div class="wrapper">
 		<hr id="line-1">
 		<h1>회원 정보를 변경했습니다</h1>
 		<hr id="line-2">
-		<a href="myInfo.jsp">마이 페이지로 돌아가기</a>
-				<a href="memberIndex.html">로그인 페이지로 돌아가기</a>
+		<a href="myInfo.jsp">마이 페이지로 돌아가기</a> <a href="memberIndex.html">로그인
+			페이지로 돌아가기</a>
 	</div>
 	<%
 		} else {
@@ -67,8 +69,8 @@ a:hover {
 		<hr id="line-1">
 		<h1>회원 정보 변경에 실패했습니다</h1>
 		<hr id="line-2">
-		<a href="myInfo.jsp">마이 페이지로 돌아가기</a>
-		<a href="memberIndex.html">로그인 페이지로 돌아가기</a>
+		<a href="myInfo.jsp">마이 페이지로 돌아가기</a> <a href="memberIndex.html">로그인
+			페이지로 돌아가기</a>
 	</div>
 	<%
 		}

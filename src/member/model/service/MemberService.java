@@ -21,7 +21,7 @@ public class MemberService {
 	}
 
 	public int memberUpdate(MemberVO mv) {
-		conn =JDBCTemplate.getConnect(conn);
+		conn = JDBCTemplate.getConnect(conn);
 		int result = new MemberDao().memberUpdate(conn, mv);
 
 		if (result > 0) {
@@ -31,5 +31,12 @@ public class MemberService {
 
 		JDBCTemplate.close(conn);
 		return result;
+	}
+
+	public boolean idCheck(String id) {
+		conn = JDBCTemplate.getConnect(conn);
+		boolean idResult = new MemberDao().idCheck(conn, id);
+		JDBCTemplate.close(conn);
+		return idResult;
 	}
 }

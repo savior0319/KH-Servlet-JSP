@@ -67,4 +67,27 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	public boolean idCheck(Connection conn, String id) {
+		boolean idResult = false;
+
+		String query = "select * from member where member_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				idResult = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+		}
+		return idResult;
+	}
 }
