@@ -59,3 +59,35 @@ java.lang, javax,servlet, javax.servlet.http, java.servlet.jsp는 기본적으�
 ex)
 <%@ include file='footer.html' %>
 ───────────────────────────────────────────────────────────────────────
+
+@ JSP Exception
+-> JSP 페이지에서 발생하는 Exception을 처리하기 위해서는 별도의 예외 처리 
+페이지를 지정 
+-> 하나의 JSP 페이지에 대한 예외 처리 페이지는 하나만 지정할 수 있기 때문에
+예외 마다 다른 예외 처리는 불가능 함
+
+## 예외가 발생할 페이지 내용 ##
+<%@ page errorPage='/error/exceptionPage.jsp' %>
+
+## 예외를 처리할 페이지 ##
+<%@ page isErrorPage='true' %>
+───────────────────────────────────────────────────────────────────────
+
+@ Declaration Tag (선언된 태그)
+-> Servlet 클래스의 맴버변수 / 메소드에 해당하는 코드를 작성 할 때 사용
+
+맴버변수 선언
+<%! int data=100 %>
+
+맴버 메소드 선언
+<%! public void dataPrint(){
+        System.out.println(data);
+}%>
+
+@ Scriptlet Tag
+-> _jspService 메소드의 로컬변수와 코드를 작성 할 때 사용
+
+전역변수는 Declaration Tag(선언문 태그)를 이용하여 만들고
+지역변수는 Scriptlet Tag 안에서 만들면 됨
+
+<% int data = 999 %> // _jspService 메소드의 지역 변수가 됨
