@@ -91,3 +91,52 @@ ex)
 지역변수는 Scriptlet Tag 안에서 만들면 됨
 
 <% int data = 999 %> // _jspService 메소드의 지역 변수가 됨
+
+───────────────────────────────────────────────────────────────────────
+
+@ Expression tag
+-> Servlet 코드에서 out.print()의 역할을 수행
+-> 표현태그에서는 ';' 붙이지 않음
+
+ex) 시간을 출력
+
+<%= new java.util.Date() %>
+
+-> out.print(new java.util.Date());
+
+세미콜론을 붙이면
+
+<%= new java.util.Date(); %>
+
+-> out.print(new java.util.Date();); // 에러 발생
+
+───────────────────────────────────────────────────────────────────────
+
+ - Session 발급 자체는 톰캣이 진행 함
+-> Servlet이든, JSP든 서버쪽으로 접속하게 되면 톰캣이 무조건 생성함
+-> 단, 생성한것을 가져다 쓰는것은 개발자가 코딩할 수 있음
+        - Servlet은 request.getSession()을 통해 가져옴
+        - JSP session이라는 내장객체를 생성하여 자동으로 가져옴
+
+
+ ## Servlet에서 로그인한 사용자 인지 아닌지를 구분하는 코드 ##
+
+HttpSession session = request.getSession(false);
+
+if(session != null){
+        로그인
+} else {
+        비로그인
+}
+
+## JSP에서 로그인한 사용자를 구분하는 코드 ##
+
+if(session.getAttribute("key값") != null){
+        로그인
+} else {
+        비로그인
+}
+
+※ JSP에서 request.getSession(false)로는 안되는 이유
+        -> 무조건 자동으로 session값을 가져오기 때문에 (비 로그인 포함)
+        false 인자값을 사용하여도 null이 리턴되는 경우가 없기 때문임

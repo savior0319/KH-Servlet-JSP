@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인 페이지</title>
+</head>
+
+<!-- JSP를 이용한 MVC 1 CRUD -->
+<!-- 1. 로그인 -->
+<!-- 2. 회원 가입 -->
+<!-- 3. 마이페이지 (회원 정보 수정) -->
+<!-- 4. 회원 탈퇴 -->
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    form {
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .wrapper {
+        width: 300px;
+        display: table;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #title {
+        font-size: 20px;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <fieldset>
+            <legend id="title">로그인</legend>
+            <form action="Login.jsp" method="post">
+                <pre>
+아이디   <input type="text" name="userId" id="userId" required>
+
+비밀번호 <input type="password" name="userPwd" id="userPwd" required>
+
+<input type="submit" value="로그인"> <input type="reset" value="취소"> <a href="jounus.html">회원가입</a>
+            </pre>
+            </form>
+        </fieldset>
+    </div>
+</body>
+
+</html>
