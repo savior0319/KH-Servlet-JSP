@@ -1,33 +1,35 @@
 package member.model.service;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
+import jdbc.common.JDBCTemplate;
 import member.DAO.MemberDao;
 import member.model.vo.MemberVO;
 
 public class MemberService {
 
+	private Connection conn = null;
+
 	public MemberService() {
 	}
 
 	public MemberVO selectMember(String userId, String userPwd) {
-		MemberVO m = new MemberVO();
-		Connection conn = null;
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "loginmember", "loginmember");
-			m = new MemberDao().selectMember(conn, userId, userPwd);
-		} catch (SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		conn = JDBCTemplate.getConnect(conn);
+		MemberVO m = new MemberDao().selectMember(conn, userId, userPwd);
+		JDBCTemplate.close(conn);
 		return m;
+	}
+
+	public int memberUpdate(MemberVO mv) {
+		conn =JDBCTemplate.getConnect(conn);
+		int result = new MemberDao().memberUpdate(conn, mv);
+
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else
+			JDBCTemplate.rollBack(conn);
+
+		JDBCTemplate.close(conn);
+		return result;
 	}
 }

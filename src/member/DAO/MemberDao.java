@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jdbc.common.JDBCTemplate;
 import member.model.vo.MemberVO;
 
 public class MemberDao {
@@ -39,14 +40,31 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
 		}
 		return m;
 
+	}
+
+	public int memberUpdate(Connection conn, MemberVO mv) {
+
+		int result = 0;
+
+		String query = "update member set member_pwd = ?, member_addr = ? where member_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, mv.getMemberPwd());
+			pstmt.setString(2, mv.getMemberAddr());
+			pstmt.setString(3, mv.getMemberID());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 }
