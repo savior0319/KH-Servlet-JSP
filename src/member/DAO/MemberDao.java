@@ -113,4 +113,23 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	public int memberDel(Connection conn, String id) {
+		
+		int result = 0;
+
+		String query = "delete from member where member_id = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

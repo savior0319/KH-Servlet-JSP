@@ -64,7 +64,7 @@ a:hover {
 			<%=mv.getMemberName() + "님 환영합니다"%>
 		</h1>
 		<a href=myInfo.jsp>마이페이지 </a> <a href=logout.jsp>로그아웃 </a> <a
-			href=memberDel.jsp>회원탈퇴 </a>
+			href=memberDel.html>회원탈퇴 </a>
 		<hr id="line-2">
 		<%
 			}

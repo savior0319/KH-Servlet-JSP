@@ -52,8 +52,19 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+	
+	public int memberDel(String id) {
+		conn = JDBCTemplate.getConnect(conn);
+		int result = new MemberDao().memberDel(conn, id);
 
-	
-	
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else
+			JDBCTemplate.rollBack(conn);
+
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 	
 }

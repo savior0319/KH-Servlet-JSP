@@ -94,7 +94,7 @@ a:hover {
 
 <script>
 	function back() {
-		window.location.href = "Login.jsp";
+		history.back(-1);
 	}
 </script>
 
