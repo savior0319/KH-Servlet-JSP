@@ -90,4 +90,27 @@ public class MemberDao {
 		}
 		return idResult;
 	}
+
+	public int joinus(Connection conn, MemberVO mv) {
+
+		int result = 0;
+
+		String query = "insert into member values(?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, mv.getMemberID());
+			pstmt.setString(2, mv.getMemberPwd());
+			pstmt.setString(3, mv.getMemberName());
+			pstmt.setInt(4, mv.getMemberAge());
+			pstmt.setString(5, mv.getMemberAddr());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }

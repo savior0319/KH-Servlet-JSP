@@ -39,4 +39,21 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 		return idResult;
 	}
+	
+	public int joinus(MemberVO mv) {
+		conn = JDBCTemplate.getConnect(conn);
+		int result = new MemberDao().joinus(conn, mv);
+
+		if (result > 0) {
+			JDBCTemplate.commit(conn);
+		} else
+			JDBCTemplate.rollBack(conn);
+
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	
+	
+	
 }

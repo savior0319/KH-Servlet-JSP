@@ -22,13 +22,13 @@
     <div class="wrapper">
         <fieldset>
             <legend> 회원 가입 </legend>
-            <form action="#" method="get">
+            <form action="joinus.jsp" method="post">
                 <pre>
     아이디      <input type="text" name="userId" id="userId" required size="10"> <button type="button" onclick="check();">중복체크</button>
 
-   비밀번호     <input type="text" name="userPwd" id="userPwd" required>
+   비밀번호     <input type="password" name="userPwd" id="userPwd" required>
 
-비밀번호 확인   <input type="text" name="userPwdRe" id="userPwdRe" required>
+비밀번호 확인   <input type="password" name="userPwdRe" id="userPwdRe" required>
 
     이름        <input type="text" name="userName" id="userName" required>
 
@@ -49,7 +49,7 @@
     }
 
     function check() {
-        window.open("idCheck.jsp", "_blank", "resizable=0, width=500, height=130");
+        window.open("idCheck.jsp", "_blank", "resizable=0, width=300, height=140");
     }
 </script>
 
