@@ -1,18 +1,18 @@
-		// ¼­ºí¸´¿¡¼­ JSP¸¦ ¿äÃ»ÇÒ ¶§ Ã³¸®ÇÏ´Â ¹æ¹ý 2°¡Áö
-		// 1. ¼­ºí¸´¿¡¼­ °ªÀ» ³Ñ°ÜÁÖÁö ¾Ê°í ÆäÀÌÁö¸¸ ÀÌµ¿ÇÏ´Â ¹æ¹ý
-		// -> response.sendRedirect("JSP °æ·Î");
-		// - ÇØ´ç JSP °æ·Î·Î ÀÌµ¿ÇÏ¶ó´Â ÀÇ¹Ì
-		// - ¼­ºí¸´¿¡¼­ Ã³¸®ÇÑ µ¥ÀÌÅÍ¸¦ º°µµ·Î ³Ñ±æ ¼ö ¾øÀ½(session °´Ã¼ Á¦¿Ü)
+ì„œë¸”ë¦¿ì—ì„œ JSPë¥¼ ìš”ì²­í•  ë•Œ ì²˜ë¦¬í•˜ëŠ” ë°©ë²• 2ê°€ì§€
+1. ì„œë¸”ë¦¿ì—ì„œ ê°’ì„ ë„˜ê²¨ì£¼ì§€ ì•Šê³  íŽ˜ì´ì§€ë§Œ ì´ë™í•˜ëŠ” ë°©ë²•
+-> response.sendRedirect("JSP ê²½ë¡œ");
+- í•´ë‹¹ JSP ê²½ë¡œë¡œ ì´ë™í•˜ë¼ëŠ” ì˜ë¯¸
+- ì„œë¸”ë¦¿ì—ì„œ ì²˜ë¦¬í•œ ë°ì´í„°ë¥¼ ë³„ë„ë¡œ ë„˜ê¸¸ ìˆ˜ ì—†ìŒ(session ê°ì²´ ì œì™¸)
 		
-		// 2. ¼­ºí¸´¿¡¼­ °ªÀ» ³Ñ°ÜÁÖ°í ÇØ´ç ÆäÀÌÁö¿¡¼­ Ã³¸® ÇÒ ¼ö ÀÖµµ·Ï ÇÏ´Â ¹æ¹ý
-		// -> RequestDispatcher view = request.getRequestDispatcher("JSP°æ·Î");
-		// -> request.setAttribute("key", value);
-		// -> view.forward(request, response);
-		// -> ¼­ºí¸´¿¡¼­ Ã³¸®ÇÑ µ¥ÀÌÅÍ¸¦ JSP¿¡¼­ °¡Á®´Ù°¡ »ç¿ëÇØ¾ß ÇÒ ¶§ ¾²´Â ¹æ¹ý
-		// RequestDisPatcher´Â JSP °æ·Î¸¦ ÀúÀåÇÏ°í ÀÖ´Â °´Ã¼
-		// - »ý¼ºµÈ °´Ã¼¸í(view)¸¦ °¡Áö°í ÇØ´ç JSP ÆäÀÌÁö·Î ÀÌµ¿ ÇÒ ¼ö ÀÖÀ½
-		// ÀÌ ‹š request¿Í response °´Ã¼¸¦ °¡Áö°í ÀÌµ¿ ÇÒ ¼ö ÀÖÀ½
-		// °ªÀ» ³Ñ°ÜÁÖ±â À§ÇØ¼­´Â ÀÌµ¿ÇÏ±â Àü¿¡ request¿¡ Á¤º¸¸¦ Ã¤¿ö¼­ ÀÌµ¿ ½ÃÅ´
-		// (request.setAttribute());
-		// - ÇØ´ç JSP ÆäÀÌÁö¿¡´Â requset.getAttribute() ¸Þ¼Òµå¸¦ ÅëÇØ ²¨³»¼­ ¾µ ¼ö ÀÖÀ½
-		
+2. ì„œë¸”ë¦¿ì—ì„œ ê°’ì„ ë„˜ê²¨ì£¼ê³  í•´ë‹¹ íŽ˜ì´ì§€ì—ì„œ ì²˜ë¦¬ í•  ìˆ˜ ìžˆë„ë¡ í•˜ëŠ” ë°©ë²•
+-> RequestDispatcher view = request.getRequestDispatcher("JSPê²½ë¡œ");-> request.setAttribute("key", value);
+-> view.forward(request, response);ã„¸
+-> ì„œë¸”ë¦¿ì—ì„œ ì²˜ë¦¬í•œ ë°ì´í„°ë¥¼ JSPì—ì„œ ê°€ì ¸ë‹¤ê°€ ì‚¬ìš©í•´ì•¼ í•  ë•Œ ì“°ëŠ” ë°©ë²•
+RequestDisPatcherëŠ” JSP ê²½ë¡œë¥¼ ì €ìž¥í•˜ê³  ìžˆëŠ” ê°ì²´
+- ìƒì„±ëœ ê°ì²´ëª…(view)ë¥¼ ê°€ì§€ê³  í•´ë‹¹ JSP íŽ˜ì´ì§€ë¡œ ì´ë™ í•  ìˆ˜ ìžˆìŒ
+ì´ ë•Œ requestì™€ response ê°ì²´ë¥¼ ê°€ì§€ê³  ì´ë™ í•  ìˆ˜ ìžˆìŒ
+ê°’ì„ ë„˜ê²¨ì£¼ê¸° ìœ„í•´ì„œëŠ” ì´ë™í•˜ê¸° ì „ì— requestì— ì •ë³´ë¥¼ ì±„ì›Œì„œ ì´ë™ ì‹œí‚´
+(request.setAttribute());
+- í•´ë‹¹ JSP íŽ˜ì´ì§€ì—ëŠ” requset.getAttribute() ë©”ì†Œë“œë¥¼ í†µí•´ êº¼ë‚´ì„œ ì“¸ ìˆ˜ ìžˆìŒ
+
+â€» RequestDispatcherëŠ” ê²½ë¡œê°€ ë°”ë€Œì—¬ë„ ì•ˆë°”ë€ê±° ì²˜ëŸ¼ ë³´ìž„
